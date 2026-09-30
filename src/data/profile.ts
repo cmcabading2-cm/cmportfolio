@@ -57,7 +57,7 @@ export const profile: Profile = {
   location: 'Quezon City (GMT+8)',
   // Pick any icon from https://phosphoricons.com and import it above.
   stats: [
-    { value: '9 yrs', label: 'Experience', Icon: Briefcase },
+    { value: '6 yrs', label: 'Experience', Icon: Briefcase },
     { value: 'One-stop', label: 'Designer', Icon: PenNib },
     { value: 'Techie', label: 'By heart', Icon: Heart },
   ],
