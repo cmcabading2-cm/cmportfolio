@@ -7,7 +7,35 @@ export type Funnel = {
   desc: string
   /** Public subfolder the HTML + thumbnail live under. Default 'funnels'. */
   dir?: 'funnels' | 'samples'
+  /** A plain screenshot (3:4) used instead of the HTML page's thumbnail. */
+  image?: string
 }
+
+/**
+ * Screenshots for the "Pages and sites" reel on Projects. Look-only: the reel
+ * spins and pops on hover, nothing opens. Files live in public/pages/ at 3:4
+ * (600x800). While this list is empty the reel shows the placeholder sites.
+ */
+export const shot = (file: string, label: string): Funnel => ({
+  file,
+  label,
+  tag: 'Website',
+  desc: '',
+  image: `/pages/${file}`,
+})
+
+export const pageShots: Funnel[] = [
+  shot('oralin-dental.jpg', 'Oralin Dental Clinic website'),
+  shot('omar-furniture.jpg', 'Omar furniture shopping app'),
+  shot('travelnest-app.jpg', 'TheTravelNest travel app'),
+  shot('pure-reception.jpg', 'Pure Reception social posts'),
+  shot('luxora-fashion.jpg', 'Luxora fashion app'),
+  shot('tillamook-home.jpg', 'Home rental listing card'),
+  shot('grocery-app.jpg', 'Grocery delivery app'),
+  shot('guitar-product.jpg', 'Guitar product card'),
+  shot('ride-concept.jpg', 'Ride-hailing app redesign'),
+  shot('taskly-app.jpg', 'Taskly task manager app'),
+]
 
 /**
  * Your funnel pages and website samples. Every entry is a PLACEHOLDER page

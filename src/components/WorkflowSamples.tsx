@@ -22,13 +22,13 @@ import { X } from '@/components/slab'
 type Sample = { file: string; label: string }
 
 const SAMPLES: Sample[] = [
-  { file: 'project-1.jpg', label: 'Project Screenshot 1' },
-  { file: 'project-2.jpg', label: 'Project Screenshot 2' },
-  { file: 'project-3.jpg', label: 'Project Screenshot 3' },
-  { file: 'project-4.jpg', label: 'Project Screenshot 4' },
+  { file: 'anker.webp', label: 'Anker' },
+  { file: 'xpress.webp', label: 'Xpress' },
+  { file: 'llc-cosmetic.webp', label: 'LLC Cosmetic Laser Clinics' },
+  { file: 'eco-doggy.webp', label: 'Eco Doggy' },
 ]
 
-const srcOf = (s: Sample) => `/placeholders/${encodeURIComponent(s.file)}`
+const srcOf = (s: Sample) => `/work/${encodeURIComponent(s.file)}`
 
 export default function WorkflowSamples() {
   const doubled = useMemo(() => [...SAMPLES, ...SAMPLES], [])
@@ -64,7 +64,7 @@ export default function WorkflowSamples() {
   return (
     <section className="wfs" id="workflow-samples" aria-labelledby="wfs-heading" data-reveal>
       <p className="wfs__caption" id="wfs-heading">
-        PLACEHOLDER - tell me what to put here: one line on what these screenshots show.
+        A few projects where research, strategy, and design came together to solve real problems. Click one to see it full size.
       </p>
 
       <div className="wfs__strip">

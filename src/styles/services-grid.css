@@ -13,7 +13,7 @@
   .sgrid .pgrid__title { font-size: clamp(26px, 2vw, 40px); }
   .sgrid .pgrid__lede { font-size: clamp(13px, 0.9vw, 16px); }
   .sgrid { height: auto; }
-  .sgrid__glass { height: auto; grid-template-rows: auto auto auto; }
+  .sgrid__glass { height: auto; grid-template-rows: auto auto; }
   .sgrid__flow-main { height: clamp(380px, 50vh, 540px); }
 }
 /* The bands need more air than the Home sheet's default gap - each one is

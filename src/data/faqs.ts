@@ -9,22 +9,22 @@ export type QA = { q: string; a: string }
 export const FAQS: QA[] = [
   {
     q: 'What do you do?',
-    a: 'PLACEHOLDER - tell me what to put here: the kinds of work you take on, and who it is usually for.',
+    a: 'UI/UX design for websites and apps: user research, user flows, wireframes and prototypes, UI design, and testing. I work with people and businesses, from e-commerce stores to service brands.',
   },
   {
     q: 'How fast can you start?',
-    a: 'PLACEHOLDER - tell me what to put here: your usual lead time for small fixes vs. larger projects, and your working hours.',
+    a: 'Usually within a week. Small fixes can often start sooner.',
   },
   {
     q: 'How much do you charge?',
-    a: 'PLACEHOLDER - tell me what to put here: how you price (hourly, per project, retainer) and how a quote is put together.',
+    a: 'It depends on the project: per project for new work, hourly for smaller changes. Tell me what you need and I’ll send a quote.',
   },
   {
     q: 'Where are you based?',
-    a: 'PLACEHOLDER - tell me what to put here: your location or timezone, and which client timezones you overlap with.',
+    a: 'Quezon City, Philippines (GMT+8). I work remotely with clients in other timezones.',
   },
   {
     q: 'What happens after I write?',
-    a: 'PLACEHOLDER - tell me what to put here: how fast you reply and what the next step looks like.',
+    a: 'I reply within 24 hours, then we set up a short call to talk about your project.',
   },
 ]

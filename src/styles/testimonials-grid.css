@@ -402,3 +402,32 @@
   .tgrid__client-role { font-size: 11.5px; }
   .tgrid__client-tag { font-size: 12px; }
 }
+
+/* ---------- Left: the quote ----------
+   The client's words on one plate: an orange mark, the quote set large, the
+   name underneath. Replaces the video reel. */
+.tgrid__quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 2vh, 22px);
+  margin: 0;
+  min-height: 0;
+  padding: clamp(22px, 2.6vw, 40px);
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.tgrid__quote-mark { color: var(--orange); flex: none; }
+.tgrid__quote-text { margin: 0; }
+.tgrid__quote-text p {
+  margin: 0;
+  font-size: clamp(17px, 1.35vw, 24px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+}
+.tgrid__quote-who { display: flex; flex-direction: column; gap: 2px; }
+.tgrid__quote-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+.tgrid__quote-meta { font-size: 13px; color: var(--muted); }

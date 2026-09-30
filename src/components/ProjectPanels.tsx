@@ -1,11 +1,12 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { Ticket, Robot, FlowArrow, type Icon } from '@/components/slab'
+import { ArrowUpRight } from '@/components/slab'
+import type { FeaturedWork } from '@/data/projects'
 import { lazy, Suspense } from 'react'
 import WorkflowSamples from './WorkflowSamples'
 import AIStackGrid from './AIStackGrid'
 import { AppsSection } from './Projects'
 import { useFunnelModal } from './FunnelModal'
-import { websiteFunnel } from '@/data/funnels'
+import { websiteFunnel, pageShots } from '@/data/funnels'
 
 const FunnelBarrel = lazy(() => import('./FunnelBarrel'))
 
@@ -48,10 +49,15 @@ function SectionWindow({ label, children }: { label: string; children: ReactNode
  *  stacks above (z 9000). */
 export function BarrelPanel() {
   const { openFull, modal } = useFunnelModal()
+  const shots = pageShots.length > 0
   return (
     <div className="ppanel ppanel--barrel">
       <Suspense fallback={<div className="funnels__barrel-skeleton" aria-hidden="true" />}>
-        <FunnelBarrel funnels={websiteFunnel} onOpen={openFull} />
+        {shots ? (
+          <FunnelBarrel funnels={pageShots} />
+        ) : (
+          <FunnelBarrel funnels={websiteFunnel} onOpen={openFull} />
+        )}
       </Suspense>
       {modal}
     </div>
@@ -68,7 +74,7 @@ export function AIWindow() {
 }
 export function AppsWindow() {
   return (
-    <SectionWindow label="Your apps">
+    <SectionWindow label="App designs">
       <AppsSection />
     </SectionWindow>
   )
@@ -87,30 +93,32 @@ export function PlanPanel() {
   )
 }
 
-/** `src` is a local page framed in the panel; `path` is what the fake
- *  address bar shows. Point these at your own pages. */
-type Build = { id: string; label: string; src: string; path: string; Icon: Icon }
-
-const BUILDS: Build[] = [
-  { id: 'ticketing', label: 'Featured Project One', src: '/placeholders/sample-plan.html?doc=1', path: '/featured-one', Icon: Ticket },
-  { id: 'framework', label: 'Featured Project Two', src: '/placeholders/sample-plan.html?doc=2', path: '/featured-two', Icon: Robot },
-  { id: 'workflow', label: 'Featured Project Three', src: '/placeholders/sample-plan.html?doc=3', path: '/featured-three', Icon: FlowArrow },
-]
-
-/** One build, framed, open on arrival. */
-function BuildPanel({ build }: { build: Build }) {
+/** One featured project: its screenshot in a browser window, the story
+ *  underneath, and a link out to the live site. */
+export function WorkPanel({ work }: { work: FeaturedWork }) {
+  const host = new URL(work.href).hostname.replace(/^www\./, '')
   return (
     <div className="ppanel ppanel--frame">
-      <FrameBar host="yourdomain.com" path={build.path} />
-      <LiveFrame src={build.src} title={build.label} />
+      <FrameBar host={host} path="/">
+        <a className="ppanel__ext" href={work.href} target="_blank" rel="noopener noreferrer">
+          Visit live site
+          <ArrowUpRight size={12} weight="bold" aria-hidden="true" />
+        </a>
+      </FrameBar>
+      <div className="ppanel__scroll ppanel__work">
+        <img className="ppanel__work-img" src={work.image} alt={`${work.name} desktop, mobile and wireframe designs`} />
+        <div className="ppanel__work-text">
+          <span className="bento__kicker">{work.category}</span>
+          <h2 className="ppanel__work-title">{work.name}</h2>
+          <p>{work.what}</p>
+          <p>{work.result}</p>
+        </div>
+      </div>
     </div>
   )
 }
-export const TicketingPanel = () => <BuildPanel build={BUILDS[0]} />
-export const FrameworkPanel = () => <BuildPanel build={BUILDS[1]} />
-export const WorkflowPanel = () => <BuildPanel build={BUILDS[2]} />
 
-function FrameBar({ host, path }: { host: string; path: string }) {
+function FrameBar({ host, path, children }: { host: string; path: string; children?: ReactNode }) {
   return (
     <div className="ppanel__bar">
       <span className="ppanel__dots" aria-hidden="true">
@@ -122,6 +130,7 @@ function FrameBar({ host, path }: { host: string; path: string }) {
         <span className="ppanel__url-host">{host}</span>
         <span className="ppanel__url-path">{path}</span>
       </span>
+      {children}
     </div>
   )
 }

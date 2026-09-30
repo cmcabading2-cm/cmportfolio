@@ -77,6 +77,8 @@
   .pgrid__glass { height: 100%; display: flex; }
   .bento--projects { flex: 1 1 auto; height: 100%; }
   .bento__card--wide { grid-column: span 2; }
+  /* The featured projects fill the half-row beside Selected Work, two by two. */
+  .bento--projects .bento__stack { grid-column: span 2; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .bento__card--btn {
   font: inherit;
@@ -150,7 +152,7 @@
    stacked inside it, no card around them. Each opens its own pop-up. */
 .bento__stack {
   display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
   gap: clamp(8px, 0.9vw, 12px);
   min-height: 0;
   min-width: 0;
@@ -431,6 +433,22 @@
   animation: ppanel-shimmer 1.4s linear infinite;
 }
 @keyframes ppanel-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* A featured project: the screenshot full width, the story under it. */
+.ppanel__work { padding-bottom: 0; background: var(--white); }
+.ppanel__work-img { display: block; width: 100%; height: auto; }
+.ppanel__work-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 720px;
+  padding: clamp(18px, 3vh, 32px) clamp(18px, 3vw, 40px) clamp(24px, 4vh, 44px);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.ppanel__work-text p { margin: 0; }
+.ppanel__work-title { margin: 0 0 4px; font-size: clamp(20px, 1.6vw, 26px); letter-spacing: -0.01em; color: var(--navy); }
 
 /* ---------- AI systems grid ----------
    Logo-first cards on the pop-up: the marks lead, the name and the line

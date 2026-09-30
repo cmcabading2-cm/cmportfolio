@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { SealCheck, CaretRight, Play, Stack, Coffee } from '@/components/slab'
+import { SealCheck, CaretRight, Stack } from '@/components/slab'
 import { profile } from '@/data/profile'
 import QuickMenu from './QuickMenu'
 
@@ -24,7 +24,7 @@ export function HomeProfile() {
           <SealCheck size={16} weight="fill" className="hprofile__verified" aria-label={profile.verifiedLabel} />
         </span>
         <span className="hprofile__handle">
-          {profile.handle} · {profile.role}
+          {[profile.handle, profile.role].filter(Boolean).join(' · ')}
         </span>
       </div>
       <QuickMenu className="hprofile__menu" />
@@ -47,11 +47,10 @@ export function HomeStats() {
 }
 
 const TILES = [
-  { n: '01', label: 'Projects', to: '/projects', title: 'PLACEHOLDER - projects headline', desc: 'Tell me what to put here.', img: '/placeholders/project-1.jpg' },
-  { n: '02', label: 'Services', to: '/services', title: 'PLACEHOLDER - services headline', desc: 'Tell me what to put here.', Icon: Stack },
-  { n: '03', label: 'Showcase', to: '/showcase', title: 'PLACEHOLDER - your flagship', desc: 'Tell me what to put here.', Icon: Coffee, accent: true },
-  { n: '04', label: 'Testimonials', to: '/testimonials', title: 'PLACEHOLDER - testimonials headline', desc: 'Tell me what to put here.', img: '/placeholders/testimonial-1.jpg' },
-  { n: '05', label: 'About', to: '/about', title: `Hi, I'm ${profile.firstName}.`, desc: 'PLACEHOLDER - one line about you.', img: profile.avatarSrc },
+  { n: '01', label: 'Projects', to: '/projects', title: 'Design work that solves real problems.', desc: 'Selected work from research to launch.', img: '/work/anker.webp' },
+  { n: '02', label: 'Services', to: '/services', title: 'Confusing experiences, made to make sense.', desc: 'Research, flows, prototypes, UI and testing.', Icon: Stack },
+  { n: '03', label: 'Testimonials', to: '/testimonials', title: 'Brands I’ve designed for.', desc: 'Anker, Xpress PH, Lactofferin Co.', img: '/work/xpress.webp' },
+  { n: '04', label: 'About', to: '/about', title: `Hi, I'm ${profile.firstName}.`, desc: 'A tech-savvy creative with a love for music, design, and everything in between.', img: profile.avatarSrc },
 ] as const
 
 export function HomeExplore() {
@@ -88,15 +87,13 @@ export function HomeExplore() {
           </Link>
         </h2>
       </div>
-      <Link to="/testimonials" className="hproof" aria-label="Client testimonial. PLACEHOLDER - a one-line teaser for your best testimonial.">
+      <Link to="/testimonials" className="hproof">
         <span className="hproof__stage">
-          <img src="/placeholders/testimonial-1.jpg" alt="" loading="lazy" />
-          <span className="hproof__play" aria-hidden="true"><Play size={20} weight="fill" /></span>
-          <span className="hproof__dur" aria-hidden="true">0:00</span>
+          <img src="/work/anker.webp" alt="" loading="lazy" />
         </span>
         <span className="hproof__copy">
-          <span className="hproof__title">PLACEHOLDER - tell me what to put here: a one-line teaser for your best testimonial.</span>
-          <span className="hproof__meta">PLACEHOLDER - client role</span>
+          <span className="hproof__title">“Carissa took the time to understand how our customers shop and turned that into a cleaner, easier product browsing experience. Great to work with, open to feedback, and always focused on the user.”</span>
+          <span className="hproof__meta">Anker Eufy</span>
         </span>
       </Link>
     </>

@@ -60,10 +60,10 @@ export default function ContactGrid() {
       <header className="pgrid__head">
         <span className="pgrid__eyebrow">FAQs / Contact</span>
         <h1 className="pgrid__title" id="contact-title">
-          Your contact headline goes here.
+          Have something confusing? Let’s make it simple.
         </h1>
         <p className="pgrid__lede">
-          PLACEHOLDER - tell me what to put here: one or two lines inviting people to write and saying what they get back.
+          Tell me about your product and who uses it. I’ll reply with how I can help.
         </p>
       </header>
 
@@ -197,7 +197,7 @@ export default function ContactGrid() {
                     {status.note}
                   </span>
                 ) : (
-                  <span className="cgrid__hint">Short reassurance line, e.g. your reply time.</span>
+                  <span className="cgrid__hint">I reply within 24 hours.</span>
                 )}
               </div>
             </form>

@@ -249,13 +249,15 @@
   min-width: 0;
   margin: 0 calc(-1 * clamp(14px, 1.4vw, 24px)) calc(-1 * clamp(14px, 2vh, 24px)) 0;
 }
+/* A photo, not a cut-out: it fills the column and the sheet's corner clips it. */
 .agrid__portrait img {
   display: block;
   width: 100%;
   height: 100%;
   max-width: 100%;
-  object-fit: contain;
-  object-position: bottom right;
+  object-fit: cover;
+  object-position: 40% 30%;
+  border-top-left-radius: 16px;
 }
 
 /* ---------- Below the shell ---------- */

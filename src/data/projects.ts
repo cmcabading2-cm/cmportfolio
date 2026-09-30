@@ -1,3 +1,62 @@
+import { ShoppingCart, Car, Sparkle, PawPrint, type Icon } from '@/components/slab'
+
+/** A featured project: a card in the Projects stack that opens its screenshot. */
+export type FeaturedWork = {
+  id: string
+  category: string
+  name: string
+  what: string
+  result: string
+  /** Live site, opened from the pop-up. */
+  href: string
+  /** Screenshot in public/work/. */
+  image: string
+  Icon: Icon
+}
+
+export const featuredWork: FeaturedWork[] = [
+  {
+    id: 'anker',
+    category: 'E-commerce Website',
+    name: 'Anker',
+    what: 'I redesigned the Anker online store to make product discovery and comparison easier across its wide range of chargers and accessories.',
+    result: 'The result: a cleaner browsing flow and a faster, more confident path from product page to checkout.',
+    href: 'https://anker.ph/',
+    image: '/work/anker.webp',
+    Icon: ShoppingCart,
+  },
+  {
+    id: 'xpress',
+    category: 'Website & Native App',
+    name: 'Xpress',
+    what: 'Designed a ride-hailing website and mobile app that let riders book, pay, and track their driver from any device.',
+    result: 'The result: one consistent experience across web and mobile that makes getting a ride quick and easy.',
+    href: 'https://www.xpress.ph/',
+    image: '/work/xpress.webp',
+    Icon: Car,
+  },
+  {
+    id: 'llc-cosmetic',
+    category: 'Omnichannel Website',
+    name: 'LLC Cosmetic Laser Clinics',
+    what: "Redesigned the clinic's service pages and booking flow, making treatments, prices, and available slots easy to find.",
+    result: 'The result: more online bookings and fewer steps to schedule an appointment.',
+    href: 'https://llccosmetic.com/',
+    image: '/work/llc-cosmetic.webp',
+    Icon: Sparkle,
+  },
+  {
+    id: 'eco-doggy',
+    category: 'Omnichannel Website',
+    name: 'Eco Doggy',
+    what: 'Designed an omnichannel website that connects online shopping with in-store pickup, stock checks, and a shared cart across devices.',
+    result: 'The result: pet owners can shop however they like, with one consistent experience from phone to store.',
+    href: 'https://ecodoggy.com.au/',
+    image: '/work/eco-doggy.webp',
+    Icon: PawPrint,
+  },
+]
+
 export type AppStat = { value: string; label: string }
 
 export type AppProject = {
@@ -18,81 +77,81 @@ export type AppProject = {
 export type MobileApp = AppProject
 
 /**
- * Your apps. Every value is a PLACEHOLDER. Screenshots live in
- * public/placeholders/ - swap in your own (960x514 works well).
+ * App designs, shown under "Apps and tools" on Projects. Screenshots live in
+ * public/apps/ and are shown whole (object-fit: contain in a 4:3 frame).
+ * Stats describe the design itself - screens and category - not usage.
  */
-const STATS: AppStat[] = [
-  { value: '0', label: 'Stat one' },
-  { value: '0', label: 'Stat two' },
-  { value: '0', label: 'Stat three' },
-]
-
-const DESC = 'PLACEHOLDER - tell me what to put here: what the app does, who it is for, and where it is published.'
-
 export const mobileApps: MobileApp[] = [
   {
-    name: 'App Name One',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    imageSrc: '/placeholders/app-1.jpg',
-    imagePosition: '50% 30%',
-    accentColor: '#2563EB',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'Omar',
+    tagline: 'Find unique furniture for your home.',
+    description: 'A furniture shopping app: browsing, product details and a cart with promo codes.',
+    imageSrc: '/apps/omar.jpg',
+    accentColor: '#2F5D46',
+    stats: [
+      { value: '3', label: 'Screens' },
+      { value: 'Shop', label: 'Category' },
+    ],
+    badge: 'Mobile App',
   },
   {
-    name: 'App Name Two',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    imageSrc: '/placeholders/app-2.jpg',
-    accentColor: '#7C3AED',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'Luxora',
+    tagline: 'Fashion, one tap away.',
+    description: 'A fashion store app with offers, collections and a product overview with sizes and colors.',
+    imageSrc: '/apps/luxora.jpg',
+    accentColor: '#2F6BFF',
+    stats: [
+      { value: '2', label: 'Screens' },
+      { value: 'Fashion', label: 'Category' },
+    ],
+    badge: 'Mobile App',
   },
   {
-    name: 'App Name Three',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    imageSrc: '/placeholders/app-3.jpg',
-    accentColor: '#16A34A',
-    stats: STATS,
-    badge: 'Badge',
-  },
-]
-
-export const webApps: AppProject[] = [
-  {
-    name: 'Web App One',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    accentColor: '#0EA5E9',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'TheTravelNest',
+    tagline: 'Explore. Discover. Belong.',
+    description: 'A travel app for flights, hotels and experiences, from search to booking confirmation.',
+    imageSrc: '/apps/travelnest.jpg',
+    accentColor: '#1E6BF0',
+    stats: [
+      { value: '10', label: 'Screens' },
+      { value: 'Travel', label: 'Category' },
+    ],
+    badge: 'Mobile App',
   },
   {
-    name: 'Web App Two',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    accentColor: '#EF4444',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'Good Food',
+    tagline: 'Fresh food and daily essentials in one place.',
+    description: 'A grocery delivery app covering categories, cart, checkout, order tracking and profile.',
+    imageSrc: '/apps/grocery.jpg',
+    accentColor: '#2E9E44',
+    stats: [
+      { value: '10', label: 'Screens' },
+      { value: 'Grocery', label: 'Category' },
+    ],
+    badge: 'Mobile App',
   },
   {
-    name: 'Web App Three',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    imageSrc: '/placeholders/project-3.jpg',
-    accentColor: '#0891B2',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'Taskly',
+    tagline: 'Plan today, achieve tomorrow.',
+    description: 'A task manager with onboarding, projects, a calendar and progress tracking.',
+    imageSrc: '/apps/taskly.jpg',
+    accentColor: '#5B5BF0',
+    stats: [
+      { value: '10', label: 'Screens' },
+      { value: 'Productivity', label: 'Category' },
+    ],
+    badge: 'Mobile App',
   },
   {
-    name: 'Web App Four',
-    tagline: 'PLACEHOLDER - one-line tagline.',
-    description: DESC,
-    imageSrc: '/placeholders/project-4.jpg',
-    accentColor: '#F59E0B',
-    stats: STATS,
-    badge: 'Badge',
+    name: 'Ride app redesign',
+    tagline: 'Concept A to Concept B.',
+    description: 'A ride-hailing home screen redesigned for quicker access to saved places and services.',
+    imageSrc: '/apps/ride.jpg',
+    accentColor: '#1F6B45',
+    stats: [
+      { value: '2', label: 'Concepts' },
+      { value: 'Mobility', label: 'Category' },
+    ],
+    badge: 'Redesign',
   },
 ]

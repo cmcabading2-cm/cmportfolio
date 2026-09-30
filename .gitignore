@@ -17,3 +17,7 @@ pnpm-debug.log*
 # needs it - so it is the one env file that is tracked.
 !.env.production
 !.env.example
+
+# Local build and editor leftovers
+*.tsbuildinfo
+.claude/

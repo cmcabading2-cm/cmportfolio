@@ -6,7 +6,6 @@ import {
   HomeIcon,
   FolderIcon,
   StackIcon,
-  CupIcon,
   StarIcon,
   UserIcon,
   MessageIcon,
@@ -29,7 +28,6 @@ export const RAIL_LINKS = [
   { label: 'Home', to: '/', Icon: HomeIcon },
   { label: 'Projects', to: '/projects', Icon: FolderIcon },
   { label: 'Services', to: '/services', Icon: StackIcon },
-  { label: 'Showcase', to: '/showcase', Icon: CupIcon },
   { label: 'Testimonials', to: '/testimonials', Icon: StarIcon },
   { label: 'About', to: '/about', Icon: UserIcon },
   { label: 'FAQs / Contact', to: '/contact', Icon: MessageIcon },
@@ -59,7 +57,7 @@ export default function Rail() {
           <SealCheck size={19} weight="fill" aria-label={profile.verifiedLabel} />
         </h2>
         <p className="rail__handle">
-          {profile.handle}
+          {profile.handle || profile.role}
         </p>
 
         <div className="rail__actions">

@@ -10,7 +10,7 @@
  * other files in src/data/ and at the top of each view component.
  */
 
-import { Briefcase, SealCheck, Clock, type Icon } from '@/components/slab'
+import { Briefcase, PenNib, Heart, type Icon } from '@/components/slab'
 
 export type SocialLink = {
   label: string
@@ -25,6 +25,7 @@ export type Profile = {
   name: string
   /** First name, used in "Hi, I'm ___." on About. */
   firstName: string
+  /** Leave empty ('') to hide it; the role shows in its place. */
   handle: string
   /** Short role line under the handle on phones. */
   role: string
@@ -46,31 +47,34 @@ export type Profile = {
 }
 
 export const profile: Profile = {
-  name: 'Your Name',
-  firstName: 'Your Name',
-  handle: '@yourhandle',
-  role: 'PLACEHOLDER - your title',
-  avatarSrc: '/avatar.svg',
-  verifiedLabel: 'PLACEHOLDER - what the tick means (e.g. a certification)',
-  email: 'you@example.com',
-  location: 'PLACEHOLDER - your city or timezone',
+  name: 'Carissa Mae Cabading',
+  firstName: 'CM',
+  handle: '',
+  role: 'UI/UX Designer',
+  avatarSrc: '/avatar.jpg',
+  verifiedLabel: 'Foundations of User Experience (UX) Design - Coursera',
+  email: 'cmcabading2@gmail.com',
+  location: 'Quezon City (GMT+8)',
   // Pick any icon from https://phosphoricons.com and import it above.
   stats: [
-    { value: '0 yrs', label: 'PLACEHOLDER', Icon: Briefcase },
-    { value: '#000', label: 'PLACEHOLDER', Icon: SealCheck },
-    { value: 'GMT+0', label: 'PLACEHOLDER', Icon: Clock },
+    { value: '9 yrs', label: 'Experience', Icon: Briefcase },
+    { value: 'One-stop', label: 'Designer', Icon: PenNib },
+    { value: 'Techie', label: 'By heart', Icon: Heart },
   ],
   // The intro types this line, then flies it into the Home headline.
   // Keep it short: two halves, 5-8 words total.
-  displayName: { line1: 'Your headline here.', line2: 'Keep it short.' },
+  displayName: { line1: 'Making complex', line2: 'things simple.' },
   hero: {
-    body: 'PLACEHOLDER - one line on what you do and who you do it for.',
-    portraitSrc: '/avatar.svg',
-    portraitAlt: 'Portrait placeholder',
+    body: 'I work with people and businesses to make their ideas clearer, simpler, and more meaningful through design.',
+    portraitSrc: '/portrait.jpg',
+    portraitAlt: 'Carissa Mae Cabading',
   },
   socials: [
-    { label: 'Facebook profile', href: '#', iconPath: '/icons/facebook.svg' },
-    { label: 'LinkedIn profile', href: '#', iconPath: '/icons/linkedin.svg' },
-    { label: 'Discord profile', href: '#', iconPath: '/icons/discord.svg' },
+    { label: 'Facebook profile', href: 'https://www.facebook.com/crssmcbdng', iconPath: '/icons/facebook.svg' },
+    {
+      label: 'LinkedIn profile',
+      href: 'https://www.linkedin.com/in/carissa-mae-cabading-30760816b/',
+      iconPath: '/icons/linkedin.svg',
+    },
   ],
 }

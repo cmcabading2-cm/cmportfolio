@@ -19,10 +19,12 @@ import type { Funnel } from '@/data/funnels'
 
 type Props = {
   funnels: Funnel[]
-  onOpen: (funnel: Funnel, trigger?: HTMLElement | null) => void
+  /** Omit for a look-only reel: cards pop on hover but nothing opens. */
+  onOpen?: (funnel: Funnel, trigger?: HTMLElement | null) => void
 }
 
 function thumbSrc(f: Funnel) {
+  if (f.image) return f.image
   const dir = f.dir ?? 'funnels'
   return `/${dir}/thumbs/${f.file.replace('.html', '.jpeg')}`
 }
@@ -262,7 +264,7 @@ export default function FunnelBarrel({ funnels, onOpen }: Props) {
           return mat.opacity > 0.08
         })
         const data = hit?.object.userData as CardData | undefined
-        if (data?.funnel) onOpenRef.current(data.funnel, canvas)
+        if (data?.funnel) onOpenRef.current?.(data.funnel, canvas)
       }
     }
 
@@ -344,7 +346,10 @@ export default function FunnelBarrel({ funnels, onOpen }: Props) {
         const top = (hit?.object as THREE.Mesh) ?? null
         if (top !== hovered) {
           hovered = top
-          if (hovered) {
+          if (hovered && !onOpenRef.current) {
+            // Look-only: the card pops and the rest dim, no label, no click.
+            labelEl.classList.remove('is-on')
+          } else if (hovered) {
             const data = hovered.userData as CardData
             labCat.textContent = data.funnel.tag
             labTitle.textContent = data.funnel.label
@@ -414,16 +419,20 @@ export default function FunnelBarrel({ funnels, onOpen }: Props) {
         <span className="funnels__barrel-label-title" />
       </div>
       <span className="funnels__barrel-hint" aria-hidden="true">
-        Drag to spin &middot; click a page to open
+        {onOpen ? <>Drag to spin &middot; click a page to open</> : 'Drag to spin'}
       </span>
 
       {/* Accessible fallback: every page reachable by keyboard / screen reader. */}
       <ul className="funnels__barrel-a11y sr-only">
         {funnels.map((f) => (
           <li key={f.file}>
-            <button type="button" onClick={(e) => onOpen(f, e.currentTarget)}>
-              Open {f.label} ({f.tag})
-            </button>
+            {onOpen ? (
+              <button type="button" onClick={(e) => onOpen(f, e.currentTarget)}>
+                Open {f.label} ({f.tag})
+              </button>
+            ) : (
+              f.label
+            )}
           </li>
         ))}
       </ul>

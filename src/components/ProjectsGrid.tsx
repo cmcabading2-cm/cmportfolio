@@ -1,11 +1,10 @@
 import { Fragment, useCallback, useEffect, useRef, useState, type ComponentType, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { ArrowUpRight, X, Ticket, Robot, FlowArrow, CursorClick } from '@/components/slab'
-import { FlowIcon, PlanIcon, GlobeIcon, SparkIcon, DeviceIcon } from './ProjectIcons'
-import { AutomationsPanel, PlanPanel, TicketingPanel, FrameworkPanel, WorkflowPanel, BarrelPanel, AIWindow, AppsWindow } from './ProjectPanels'
-import { gymFunnel, bookingFunnel, websiteFunnel, type Funnel } from '@/data/funnels'
-import { mobileApps } from '@/data/projects'
-import { aiStack, type StackNode } from '@/data/ai-stack'
+import { ArrowUpRight, X, CursorClick } from '@/components/slab'
+import { FlowIcon, GlobeIcon, DeviceIcon } from './ProjectIcons'
+import { AutomationsPanel, WorkPanel, BarrelPanel, AppsWindow } from './ProjectPanels'
+import { gymFunnel, bookingFunnel, websiteFunnel, pageShots, type Funnel } from '@/data/funnels'
+import { mobileApps, featuredWork } from '@/data/projects'
 import { useIsPhone } from '@/hooks/useMediaQuery'
 
 /**
@@ -35,49 +34,38 @@ type Project = {
   cat: Cat
 }
 
-type Cat = 'work' | 'sites' | 'apps' | 'ai'
+type Cat = 'work' | 'sites' | 'apps'
 const FILTERS: { key: Cat | 'all'; label: string }[] = [
   { key: 'all', label: 'All' },
   { key: 'work', label: 'Work' },
   { key: 'sites', label: 'Sites' },
   { key: 'apps', label: 'Apps' },
-  { key: 'ai', label: 'AI' },
 ]
 
-/** Example tool marks, from public/icons. Swap for what you build with. */
-const GHL = '/icons/gohighlevel.png'
-const CLAUDE_CODE = '/icons/claude-code-logo.png'
-const CODEX = '/icons/ai/codex.svg'
-const HERMES = '/icons/ai/hermes.svg'
-const PLAY = '/icons/ai/googleplay.svg'
-const CHROME = '/icons/ai/googlechrome.svg'
-const EXPO = '/icons/ai/expo.svg'
+const WF_SHOTS = ['anker.webp', 'xpress.webp', 'llc-cosmetic.webp', 'eco-doggy.webp'].map((f) => `/work/${f}`)
 
-const WF_SHOTS = ['project-1.jpg', 'project-2.jpg', 'project-3.jpg', 'project-4.jpg'].map(
-  (f) => `/placeholders/${f}`,
-)
+const FUNNEL_SHOTS = (pageShots.length > 0 ? pageShots : [gymFunnel[0], bookingFunnel[0], websiteFunnel[0]])
+  .filter(Boolean)
+  .slice(0, 3)
+const thumbSrc = (f: Funnel) => f.image ?? `/${f.dir ?? 'funnels'}/thumbs/${f.file.replace('.html', '.jpeg')}`
 
-const FUNNEL_SHOTS = [gymFunnel[0], bookingFunnel[0], websiteFunnel[0]].filter(Boolean)
-const thumbSrc = (f: Funnel) => `/${f.dir ?? 'funnels'}/thumbs/${f.file.replace('.html', '.jpeg')}`
+const APP_SHOTS = mobileApps.map((a) => a.imageSrc).filter((s): s is string => !!s)
 
-const APP_SHOTS = [
-  ...mobileApps.map((a) => a.imageSrc).filter((s): s is string => !!s),
-  '/placeholders/extension-1.jpg',
-  '/placeholders/extension-2.jpg',
-]
+/** The featured projects (src/data/projects.ts): each its own card in the
+ *  stack, each opening its screenshot and live link. */
+const BUILDS: Project[] = featuredWork.map((w, i) => ({
+  id: w.id,
+  cat: 'work',
+  index: String(i + 3).padStart(2, '0'),
+  kicker: w.category,
+  title: w.name,
+  desc: w.what,
+  Icon: () => <w.Icon size={20} weight="duotone" />,
+  eyebrow: 'Featured work',
+  Section: () => <WorkPanel work={w} />,
+  Preview: () => null,
+}))
 
-const BUILD_DESC = 'PLACEHOLDER - tell me what to put here: two lines on what this project is and the result it got.'
-
-/** The three featured builds: each its own card in the stack, each its own
- *  pop-up. */
-const BUILDS: Project[] = [
-  { id: 'ticketing', cat: 'work', index: '03', kicker: 'Placeholder category', title: 'Featured Project One', desc: BUILD_DESC, Icon: () => <Ticket size={20} weight="duotone" />, logos: [GHL], eyebrow: 'Featured build', Section: TicketingPanel, Preview: () => null },
-  { id: 'framework', cat: 'ai', index: '04', kicker: 'Placeholder category', title: 'Featured Project Two', desc: BUILD_DESC, Icon: () => <Robot size={20} weight="duotone" />, logos: [CLAUDE_CODE], eyebrow: 'Featured build', Section: FrameworkPanel, Preview: () => null },
-  { id: 'workflow', cat: 'ai', index: '05', kicker: 'Placeholder category', title: 'Featured Project Three', desc: BUILD_DESC, Icon: () => <FlowArrow size={20} weight="duotone" />, logos: [CLAUDE_CODE, CODEX, HERMES], eyebrow: 'Featured build', Section: WorkflowPanel, Preview: () => null },
-]
-
-const leaves = (n: StackNode): StackNode[] => (n.children?.length ? n.children.flatMap(leaves) : [n])
-const AI_LEAVES = leaves(aiStack)
 
 /* ---------- Previews ---------- */
 
@@ -95,24 +83,6 @@ function WorkflowsPreview() {
   )
 }
 
-/** A paper mock of the plan document, the way SamplePlan previews it. */
-function PlanPreview() {
-  return (
-    <div className="bento__media bento__doc" aria-hidden="true">
-      <span className="bento__doc-eyebrow">Placeholder document</span>
-      <span className="bento__doc-title">Your document title here.</span>
-      <span className="bento__doc-flow">
-        <i>Step</i>
-        <i>Step</i>
-        <i>Step?</i>
-        <i className="is-on">Result</i>
-      </span>
-      <span className="bento__doc-line" />
-      <span className="bento__doc-line bento__doc-line--short" />
-    </div>
-  )
-}
-
 /** The three builds as Open Builds rows: plate, eyebrow, title, arrow. */
 function FunnelsPreview() {
   return (
@@ -121,27 +91,6 @@ function FunnelsPreview() {
         <span key={f.file} className="bento__photo bento__photo--page" style={{ ['--i' as string]: i }}>
           <img src={thumbSrc(f)} alt="" loading="lazy" decoding="async" />
         </span>
-      ))}
-    </div>
-  )
-}
-
-function AIPreview() {
-  const half = Math.ceil(AI_LEAVES.length / 2)
-  const rows = [AI_LEAVES.slice(0, half), AI_LEAVES.slice(half)]
-  return (
-    <div className="bento__media bento__chips" aria-hidden="true">
-      {rows.map((row, r) => (
-        <div key={r} className="bento__chip-row" data-dir={r ? 'right' : 'left'}>
-          <div className="bento__chip-track">
-            {[...row, ...row].map((n, i) => (
-              <span key={`${n.id}-${i}`} className="bento__chip" data-status={n.status}>
-                <n.Icon size={15} weight="duotone" />
-                {n.name}
-              </span>
-            ))}
-          </div>
-        </div>
       ))}
     </div>
   )
@@ -162,11 +111,9 @@ function AppsPreview() {
 }
 
 const PROJECTS: Project[] = [
-  { id: 'workflows', cat: 'work', index: '01', title: 'Project Title', desc: 'PLACEHOLDER - tell me what to put here: what these screens show.', Icon: FlowIcon, logos: [GHL], eyebrow: 'Screenshots', Section: AutomationsPanel, span: 2, Preview: WorkflowsPreview },
-  { id: 'plan', cat: 'work', index: '02', title: 'Sample Document', desc: 'PLACEHOLDER - tell me what to put here: the document this opens.', Icon: PlanIcon, logos: [GHL], eyebrow: 'Sample document', Section: PlanPanel, Preview: PlanPreview },
-  { id: 'funnels', cat: 'sites', index: '06', title: 'Pages and sites', desc: 'PLACEHOLDER - the pages in this reel. Spin the reel.', Icon: GlobeIcon, logos: [GHL], eyebrow: 'Pages and sites', Section: BarrelPanel, Preview: FunnelsPreview },
-  { id: 'ai', cat: 'ai', index: '07', title: 'Your systems title here', desc: 'PLACEHOLDER - tell me what to put here: the systems you run.', Icon: SparkIcon, logos: [CLAUDE_CODE, CODEX, HERMES], eyebrow: 'Your systems', Section: AIWindow, Preview: AIPreview },
-  { id: 'apps', cat: 'apps', index: '08', title: 'Apps and tools', desc: 'PLACEHOLDER - tell me what to put here: the apps and tools you ship.', Icon: DeviceIcon, logos: [PLAY, EXPO, CHROME], eyebrow: 'Your apps', Section: AppsWindow, span: 2, Preview: AppsPreview },
+  { id: 'workflows', cat: 'work', index: '01', title: 'Selected Work', desc: 'A few projects where research, strategy, and design came together to solve real problems.', Icon: FlowIcon, eyebrow: 'Screenshots', Section: AutomationsPanel, span: 2, Preview: WorkflowsPreview },
+  { id: 'funnels', cat: 'sites', index: '06', title: 'Pages and sites', desc: 'Pages I have designed. Open it and spin the reel.', Icon: GlobeIcon, eyebrow: 'Pages and sites', Section: BarrelPanel, span: 2, Preview: FunnelsPreview },
+  { id: 'apps', cat: 'apps', index: '08', title: 'App designs', desc: 'Mobile apps I have designed, from first screen to checkout.', Icon: DeviceIcon, eyebrow: 'App designs', Section: AppsWindow, span: 2, Preview: AppsPreview },
 ]
 
 /** The icon tile, or the real marks stacked horizontally in its place. */
@@ -300,9 +247,9 @@ export default function ProjectsGrid() {
       <header className="pgrid__head">
         <span className="pgrid__eyebrow">Projects</span>
         <h1 className="pgrid__title" id="projects-title">
-          Your projects headline goes right here.
+          Design work that solves real problems.
         </h1>
-        <p className="pgrid__lede">PLACEHOLDER - tell me what to put here: one line on the work below. Open a card to see it full size.</p>
+        <p className="pgrid__lede">I design intuitive digital experiences grounded in research and real user needs.</p>
       </header>
 
       {phone && (
@@ -346,10 +293,10 @@ export default function ProjectsGrid() {
               </span>
               <p.Preview />
             </button>
-            {p.id === 'plan' && stack}
+            {p.id === 'workflows' && stack}
             </Fragment>
           ))}
-          {!projects.some((p) => p.id === 'plan') && stack}
+          {!projects.some((p) => p.id === 'workflows') && stack}
         </div>
       </div>
 

@@ -69,7 +69,7 @@ html { -webkit-tap-highlight-color: transparent; }
      text setting or Android font scaling wraps instead of clipping.
      .boot__title is the intro's copy and must match exactly (boot.css: change
      one, change both). */
-  :root { --headline-em: 15.4; }
+  :root { --headline-em: 14.6; }
   .home__title,
   .boot__title { font-size: min(clamp(30px, 3.5vw, 72px), calc((100vw - 2 * var(--panel-x)) / var(--headline-em))); }
 
