@@ -41,9 +41,12 @@ export default function App() {
   const panelRef = useRef<HTMLElement>(null)
 
   // The panel is the scroller, so a route change has to reset it by hand -
-  // the browser only restores scroll on the document.
+  // the browser only restores scroll on the document. Below 1100px the shell
+  // dissolves and the document scrolls instead, so reset that too ('instant'
+  // beats the smooth scroll-behavior the phone shell sets on html).
   useEffect(() => {
     panelRef.current?.scrollTo({ top: 0, behavior: 'auto' })
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }, [pathname])
 
   // From the first route change on, a page that mounts rises into place

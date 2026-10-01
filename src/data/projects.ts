@@ -1,4 +1,4 @@
-import { ShoppingCart, Car, Sparkle, PawPrint, type Icon } from '@/components/slab'
+import { ShoppingCart, Car, Sparkle, PawPrint, SteeringWheel, type Icon } from '@/components/slab'
 
 /** A featured project: a card in the Projects stack that opens its screenshot. */
 export type FeaturedWork = {
@@ -12,6 +12,8 @@ export type FeaturedWork = {
   /** Screenshot in public/work/. */
   image: string
   Icon: Icon
+  /** A page of its own (a case study). When set, the card goes there instead of opening the pop-up. */
+  to?: string
 }
 
 export const featuredWork: FeaturedWork[] = [
@@ -54,6 +56,17 @@ export const featuredWork: FeaturedWork[] = [
     href: 'https://ecodoggy.com.au/',
     image: '/work/eco-doggy.webp',
     Icon: PawPrint,
+  },
+  {
+    id: 'driveease',
+    category: 'Car Rental Website',
+    name: 'DriveEase',
+    what: 'A one-page car rental website with a live price estimator that always applies the cheaper of the hourly or daily rate.',
+    result: 'Visitors see their price the moment they pick a car, dates and trip area.',
+    href: 'https://driveease-lyart.vercel.app/',
+    image: '/work/driveease.jpg',
+    Icon: SteeringWheel,
+    to: '/projects/driveease',
   },
 ]
 

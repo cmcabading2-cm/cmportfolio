@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useEffect, useRef, useState, type ComponentType, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import { ArrowUpRight, X, CursorClick } from '@/components/slab'
 import { FlowIcon, GlobeIcon, DeviceIcon } from './ProjectIcons'
 import { AutomationsPanel, WorkPanel, BarrelPanel, AppsWindow } from './ProjectPanels'
@@ -32,6 +33,8 @@ type Project = {
   Preview: ComponentType
   /** Phone filter bucket. */
   cat: Cat
+  /** A page of its own: the card navigates there instead of opening a dialog. */
+  to?: string
 }
 
 type Cat = 'work' | 'sites' | 'apps'
@@ -64,6 +67,7 @@ const BUILDS: Project[] = featuredWork.map((w, i) => ({
   eyebrow: 'Featured work',
   Section: () => <WorkPanel work={w} />,
   Preview: () => null,
+  to: w.to,
 }))
 
 
@@ -185,10 +189,15 @@ export default function ProjectsGrid() {
   const builds = BUILDS.filter(keep)
   const triggerRef = useRef<HTMLElement | null>(null)
 
+  const navigate = useNavigate()
   const show = useCallback((p: Project, el: HTMLElement) => {
+    if (p.to) {
+      navigate(p.to)
+      return
+    }
     triggerRef.current = el
     setOpen(p)
-  }, [])
+  }, [navigate])
   const close = useCallback(() => {
     setOpen(null)
     requestAnimationFrame(() => triggerRef.current?.focus())

@@ -79,6 +79,8 @@
   .bento__card--wide { grid-column: span 2; }
   /* The featured projects fill the half-row beside Selected Work, two by two. */
   .bento--projects .bento__stack { grid-column: span 2; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* An odd card out spans the pair, so the grid has no hole. */
+  .bento--projects .bento__stack > :last-child:nth-child(odd) { grid-column: span 2; }
 }
 .bento__card--btn {
   font: inherit;
