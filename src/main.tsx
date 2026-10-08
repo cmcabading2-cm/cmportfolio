@@ -13,7 +13,6 @@ const ServicesView = lazy(() => import('@/views/ServicesView'))
 const TestimonialsGrid = lazy(() => import('@/components/TestimonialsGrid'))
 const AboutGrid = lazy(() => import('@/components/AboutGrid'))
 const ContactGrid = lazy(() => import('@/components/ContactGrid'))
-const DriveEaseCase = lazy(() => import('@/components/DriveEaseCase'))
 const Privacy = lazy(() => import('@/components/Privacy'))
 const ToS = lazy(() => import('@/components/ToS'))
 const ThankYou = lazy(() => import('@/components/ThankYou'))
@@ -36,7 +35,6 @@ import './styles/showcase.css'
 import './styles/testimonials-grid.css'
 import './styles/about-grid.css'
 import './styles/contact-grid.css'
-import './styles/case-study.css'
 import './styles/boot.css'
 import './styles/credentials.css'
 import './styles/testimonials.css'
@@ -66,7 +64,6 @@ createRoot(container).render(
         <Route element={<App />}>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsView />} />
-          <Route path="/projects/driveease" element={<DriveEaseCase />} />
           <Route path="/services" element={<ServicesView />} />
           <Route path="/testimonials" element={<TestimonialsGrid />} />
           <Route path="/about" element={<AboutGrid />} />
